@@ -10,18 +10,16 @@ public class DoagUser {
     private String email;
     private String firstName;
     private String lastName;
-    private String password;
 
     public DoagUser() {
     }
 
-    public DoagUser(String id, String firstName, String lastName) {
+    public DoagUser(String id, String firstName, String lastName, String email) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = (firstName + "." + lastName).toLowerCase();
-        this.email = this.username + "@example.com";
-        this.password = firstName.toLowerCase();
+        this.username = email;
+        this.email = email;
     }
 
     public String getId() {
@@ -60,11 +58,7 @@ public class DoagUser {
         this.lastName = lastName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public String toString() {
+        return "User[" + String.join(";", id, username, firstName, lastName, email) + "]";
     }
 }

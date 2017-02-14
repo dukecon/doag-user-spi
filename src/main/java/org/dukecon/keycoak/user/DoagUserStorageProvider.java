@@ -21,23 +21,23 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
 
     private final KeycloakSession session;
     private final ComponentModel model;
-    private final DoagRepository repository;
+    private final DoagService doagService;
 
-    public DoagUserStorageProvider(KeycloakSession session, ComponentModel model, DoagRepository repository) {
+    public DoagUserStorageProvider(KeycloakSession session, ComponentModel model, DoagService doagService) {
         this.session = session;
         this.model = model;
-        this.repository = repository;
+        this.doagService = doagService;
     }
 
     @Override
     public UserModel getUserById(String id, RealmModel realm) {
         String externalId = StorageId.externalId(id);
-        return new UserAdapter(session, realm, model, repository.findUserById(externalId));
+        return new UserAdapter(session, realm, model, doagService.getUser(externalId));
     }
 
     @Override
     public UserModel getUserByUsername(String username, RealmModel realm) {
-        return new UserAdapter(session, realm, model, repository.findUserByUsernameOrEmail(username));
+        return new UserAdapter(session, realm, model, doagService.getUser(username));
     }
 
     @Override
@@ -62,7 +62,7 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
             return false;
         }
         UserCredentialModel cred = (UserCredentialModel) input;
-        return repository.validateCredentials(user.getUsername(), cred.getValue());
+        return doagService.validateUserPassword(user.getUsername(), cred.getValue());
     }
 
     @Override

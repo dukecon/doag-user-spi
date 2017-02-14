@@ -15,11 +15,8 @@ public class DoagUserStorageProviderFactory implements UserStorageProviderFactor
 
     @Override
     public DoagUserStorageProvider create(KeycloakSession session, ComponentModel model) {
-        // here you can setup the user storage provider, initiate some connections, etc.
-
-        DoagRepository repository = new DoagRepository();
-
-        return new DoagUserStorageProvider(session, model, repository);
+        DoagService service = new DoagService(model.get("url"), model.get("key"));
+        return new DoagUserStorageProvider(session, model, service);
     }
 
     @Override
