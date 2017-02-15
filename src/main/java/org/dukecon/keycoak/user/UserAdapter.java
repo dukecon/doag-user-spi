@@ -1,5 +1,6 @@
 package org.dukecon.keycoak.user;
 
+import org.dukecon.keycoak.user.doag.DoagUser;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;

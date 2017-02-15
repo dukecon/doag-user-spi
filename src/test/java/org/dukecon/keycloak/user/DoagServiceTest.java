@@ -1,7 +1,7 @@
 package org.dukecon.keycloak.user;
 
-import org.dukecon.keycoak.user.DoagService;
-import org.dukecon.keycoak.user.DoagUser;
+import org.dukecon.keycoak.user.doag.DoagService;
+import org.dukecon.keycoak.user.doag.DoagUser;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

@@ -1,4 +1,4 @@
-package org.dukecon.keycoak.user;
+package org.dukecon.keycoak.user.doag;
 
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko

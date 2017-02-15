@@ -1,4 +1,4 @@
-package org.dukecon.keycoak.user;
+package org.dukecon.keycoak.user.doag;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
