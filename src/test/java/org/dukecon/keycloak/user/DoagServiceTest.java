@@ -17,6 +17,7 @@ public class DoagServiceTest {
 
     private String url = System.getProperty("doag.url");
     private String key = System.getProperty("doag.key");
+    private String userId = System.getProperty("doag.userId");
     private String username = System.getProperty("doag.user");
     private String password = System.getProperty("doag.password");
 
@@ -45,6 +46,19 @@ public class DoagServiceTest {
     public void testValidateUser_fail() {
         boolean result = doagService.validateUserPassword(username, "");
         assertFalse(result);
+    }
+
+    @Test
+    public void testGetUserById() {
+        DoagUser user = doagService.getUserById(userId);
+        assertNotNull(user);
+        assertEquals(username, user.getUsername());
+    }
+
+    @Test
+    public void testGetUserById_fail() {
+        DoagUser user = doagService.getUserById("4711");
+        assertNull(user);
     }
 
 }

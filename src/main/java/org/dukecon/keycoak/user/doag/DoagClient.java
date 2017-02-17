@@ -12,6 +12,10 @@ public interface DoagClient {
                    @HeaderParam("user") String username);
 
     @GET
+    String getUserById(@HeaderParam("art") String art,
+                       @HeaderParam("id_person") String userId);
+
+    @GET
     String validatePassword(@HeaderParam("art") String art,
                             @HeaderParam("user") String username,
                             @HeaderParam("password") String password);

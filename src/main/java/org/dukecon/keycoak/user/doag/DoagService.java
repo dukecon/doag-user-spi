@@ -17,6 +17,7 @@ public class DoagService {
 
     private static final String ART_PWD = "1";
     private static final String ART_USER = "3";
+    private static final String ART_ID = "4";
 
     private DoagClient doagClient;
 
@@ -40,17 +41,43 @@ public class DoagService {
         DoagUser user = null;
         try {
             String userString = doagClient.getUser(ART_USER, username);
-            if (!userString.startsWith("false")) {
-                String[] userData = userString.split(";");
-                String id = userData[0].trim();
-                String lastname = userData[1].trim();
-                String firstname = userData[2].trim();
-                user = new DoagUser(id, firstname, lastname, username);
-            } else {
-                logger.warn("Got false response requesting user data for user " + username);
-            }
+            user = parseUserString(username, userString);
         } catch (Exception e) {
             handleException(e, "getUser");
+        }
+        logger.info("User: " + (user != null ? user.toString() : null));
+        return user;
+    }
+
+    public DoagUser getUserById(String userId) {
+        DoagUser user = null;
+        try {
+            String userString = doagClient.getUserById(ART_ID, userId);
+            user = parseUserString(userId, userString);
+        } catch (Exception e) {
+            handleException(e, "getUserById");
+        }
+        logger.info("User: " + (user != null ? user.toString() : null));
+        return user;
+    }
+
+    private DoagUser parseUserString(String userId, String userString) {
+        logger.info("Got userdata response for userId " + userId + ": " + userString.trim());
+        DoagUser user = null;
+        if (!userString.startsWith("false")) {
+            String[] userData = userString.split(";");
+            String id = userData[0].trim();
+            String lastname = "", firstname = "", email = "";
+            if (userData.length == 3) { // getUserByUsername
+                lastname = userData[1].trim();
+                firstname = userData[2].trim();
+                email = userId;
+            } else if (userData.length == 4) { // getUserById
+                email = userData[1].trim();
+                lastname = userData[2].trim();
+                firstname = userData[3].trim();
+            }
+            user = new DoagUser(id, firstname, lastname, email);
         }
         return user;
     }

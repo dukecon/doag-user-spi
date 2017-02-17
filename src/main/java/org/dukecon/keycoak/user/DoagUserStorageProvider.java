@@ -34,16 +34,22 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
     @Override
     public UserModel getUserById(String id, RealmModel realm) {
         String externalId = StorageId.externalId(id);
-        DoagUser doagUser = doagService.getUser(externalId);
-        if (null == doagUser) {
+        DoagUser doagUser = doagService.getUserById(externalId);
+        if (null != doagUser) {
+            return new UserAdapter(session, realm, model, doagUser);
+        } else {
             return null;
         }
-        return new UserAdapter(session, realm, model, doagUser);
     }
 
     @Override
     public UserModel getUserByUsername(String username, RealmModel realm) {
-        return new UserAdapter(session, realm, model, doagService.getUser(username));
+        DoagUser doagUser = doagService.getUser(username);
+        if (null != doagUser) {
+            return new UserAdapter(session, realm, model, doagUser);
+        } else {
+            return null;
+        }
     }
 
     @Override
