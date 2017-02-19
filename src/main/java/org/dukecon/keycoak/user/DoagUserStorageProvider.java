@@ -1,6 +1,7 @@
 package org.dukecon.keycoak.user;
 
 import org.dukecon.keycoak.user.doag.DoagService;
+import org.dukecon.keycoak.user.doag.DoagUser;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.credential.CredentialInput;
 import org.keycloak.credential.CredentialInputValidator;
@@ -33,7 +34,11 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
     @Override
     public UserModel getUserById(String id, RealmModel realm) {
         String externalId = StorageId.externalId(id);
-        return new UserAdapter(session, realm, model, doagService.getUser(externalId));
+        DoagUser doagUser = doagService.getUser(externalId);
+        if (null == doagUser) {
+            return null;
+        }
+        return new UserAdapter(session, realm, model, doagUser);
     }
 
     @Override

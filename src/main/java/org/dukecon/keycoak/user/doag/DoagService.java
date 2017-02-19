@@ -47,7 +47,7 @@ public class DoagService {
                 String firstname = userData[2].trim();
                 user = new DoagUser(id, firstname, lastname, username);
             } else {
-                logger.warn("Got false response requesting userdate for user " + username);
+                logger.warn("Got false response requesting user data for user " + username);
             }
         } catch (Exception e) {
             handleException(e, "getUser");
