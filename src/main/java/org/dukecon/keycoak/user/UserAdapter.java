@@ -1,16 +1,23 @@
 package org.dukecon.keycoak.user;
 
 import org.dukecon.keycoak.user.doag.DoagUser;
+import org.keycloak.common.util.MultivaluedHashMap;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.models.KeycloakSession;
 import org.keycloak.models.RealmModel;
 import org.keycloak.storage.StorageId;
 import org.keycloak.storage.adapter.AbstractUserAdapterFederatedStorage;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  */
 public class UserAdapter extends AbstractUserAdapterFederatedStorage {
+
+    static final String REAL_USERNAME_ATTRIBUTE = "realUsername";
 
     private final DoagUser user;
     private final String keycloakId;
@@ -64,5 +71,53 @@ public class UserAdapter extends AbstractUserAdapterFederatedStorage {
     @Override
     public void setLastName(String lastName) {
         user.setLastName(lastName);
+    }
+
+    @Override
+    public void setSingleAttribute(String name, String value) {
+        if (!REAL_USERNAME_ATTRIBUTE.equals(name)) {
+            super.setSingleAttribute(name, value);
+        }
+    }
+
+    @Override
+    public void removeAttribute(String name) {
+        if (!REAL_USERNAME_ATTRIBUTE.equals(name)) {
+            super.removeAttribute(name);
+        }
+    }
+
+    @Override
+    public void setAttribute(String name, List<String> values) {
+        if (!REAL_USERNAME_ATTRIBUTE.equals(name)) {
+            super.setAttribute(name, values);
+        }
+    }
+
+    @Override
+    public String getFirstAttribute(String name) {
+        if (REAL_USERNAME_ATTRIBUTE.equals(name)) {
+            return user.getRealUsername();
+        } else {
+            return super.getFirstAttribute(name);
+        }
+    }
+
+    @Override
+    public List<String> getAttribute(String name) {
+        if (REAL_USERNAME_ATTRIBUTE.equals(name)) {
+            return Collections.singletonList(user.getRealUsername());
+        } else {
+            return super.getAttribute(name);
+        }
+    }
+
+    @Override
+    public Map<String, List<String>> getAttributes() {
+        Map<String, List<String>> attrs = super.getAttributes();
+        MultivaluedHashMap<String, String> all = new MultivaluedHashMap<>();
+        all.putAll(attrs);
+        all.add(REAL_USERNAME_ATTRIBUTE, user.getRealUsername());
+        return all;
     }
 }
