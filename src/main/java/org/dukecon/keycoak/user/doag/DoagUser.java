@@ -10,16 +10,15 @@ public class DoagUser {
     private String email;
     private String firstName;
     private String lastName;
+    private String realUsername;
 
-    public DoagUser() {
-    }
-
-    public DoagUser(String id, String firstName, String lastName, String email) {
+    public DoagUser(String id, String username, String firstName, String lastName, String realUsername) {
         this.id = id;
+        this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = email;
-        this.email = email;
+        this.email = username;
+        this.realUsername = realUsername;
     }
 
     public String getId() {
@@ -58,7 +57,15 @@ public class DoagUser {
         this.lastName = lastName;
     }
 
+    public String getRealUsername() {
+        return realUsername;
+    }
+
+    public void setRealUsername(String realUsername) {
+        this.realUsername = realUsername;
+    }
+
     public String toString() {
-        return "User[" + String.join(";", id, username, firstName, lastName, email) + "]";
+        return "User[" + String.join(";", id, realUsername, firstName, lastName, email) + "]";
     }
 }
