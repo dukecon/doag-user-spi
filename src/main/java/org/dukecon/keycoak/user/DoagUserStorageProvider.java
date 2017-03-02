@@ -74,7 +74,8 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
             return false;
         }
         UserCredentialModel cred = (UserCredentialModel) input;
-        return doagService.validateUserPassword(user.getUsername(), cred.getValue());
+        String realUsername = user.getFirstAttribute(UserAdapter.REAL_USERNAME_ATTRIBUTE);
+        return doagService.validateUserPassword(realUsername, cred.getValue());
     }
 
     @Override
