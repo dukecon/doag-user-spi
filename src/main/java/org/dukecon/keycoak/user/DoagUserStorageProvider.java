@@ -20,6 +20,7 @@ import org.keycloak.storage.user.UserQueryProvider;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
@@ -41,6 +42,7 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
         String externalId = StorageId.externalId(id);
         DoagUser doagUser = doagService.getUserById(externalId);
         if (null != doagUser) {
+            UserCache.addUser(doagUser);
             return new UserAdapter(session, realm, model, doagUser);
         } else {
             return null;
@@ -51,9 +53,8 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
     public UserModel getUserByUsername(String username, RealmModel realm) {
         DoagUser doagUser = doagService.getUser(username);
         if (null != doagUser) {
-            UserModel userModel = new UserAdapter(session, realm, model, doagUser);
-            UserCache.addUser(userModel);
-            return userModel;
+            UserCache.addUser(doagUser);
+            return new UserAdapter(session, realm, model, doagUser);
         } else {
             return null;
         }
@@ -108,7 +109,9 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
 
     @Override
     public List<UserModel> getUsers(RealmModel realm) {
-        return UserCache.getUsers();
+        return UserCache.getUsers().stream()
+                .map(user -> new UserAdapter(session, realm, model, user))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -118,7 +121,9 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
 
     @Override
     public List<UserModel> searchForUser(String search, RealmModel realm) {
-        return UserCache.findUsers(search);
+        return UserCache.findUsers(search).stream()
+                .map(user -> new UserAdapter(session, realm, model, user))
+                .collect(Collectors.toList());
     }
 
     @Override
