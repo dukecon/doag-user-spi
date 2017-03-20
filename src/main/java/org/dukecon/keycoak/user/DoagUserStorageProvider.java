@@ -15,11 +15,16 @@ import org.keycloak.models.UserModel;
 import org.keycloak.storage.StorageId;
 import org.keycloak.storage.UserStorageProvider;
 import org.keycloak.storage.user.UserLookupProvider;
+import org.keycloak.storage.user.UserQueryProvider;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  */
-public class DoagUserStorageProvider implements UserStorageProvider, UserLookupProvider, CredentialInputValidator {
+public class DoagUserStorageProvider implements UserStorageProvider, UserLookupProvider, UserQueryProvider, CredentialInputValidator {
 
     private final KeycloakSession session;
     private final ComponentModel model;
@@ -46,7 +51,9 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
     public UserModel getUserByUsername(String username, RealmModel realm) {
         DoagUser doagUser = doagService.getUser(username);
         if (null != doagUser) {
-            return new UserAdapter(session, realm, model, doagUser);
+            UserModel userModel = new UserAdapter(session, realm, model, doagUser);
+            UserCache.addUser(userModel);
+            return userModel;
         } else {
             return null;
         }
@@ -92,5 +99,55 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
 
     @Override
     public void close() {
+    }
+
+    @Override
+    public int getUsersCount(RealmModel realm) {
+        return UserCache.getCount();
+    }
+
+    @Override
+    public List<UserModel> getUsers(RealmModel realm) {
+        return UserCache.getUsers();
+    }
+
+    @Override
+    public List<UserModel> getUsers(RealmModel realm, int firstResult, int maxResults) {
+        return getUsers(realm);
+    }
+
+    @Override
+    public List<UserModel> searchForUser(String search, RealmModel realm) {
+        return UserCache.findUsers(search);
+    }
+
+    @Override
+    public List<UserModel> searchForUser(String search, RealmModel realm, int firstResult, int maxResults) {
+        return searchForUser(search, realm);
+    }
+
+    @Override
+    public List<UserModel> searchForUser(Map<String, String> params, RealmModel realm) {
+        return null;
+    }
+
+    @Override
+    public List<UserModel> searchForUser(Map<String, String> params, RealmModel realm, int firstResult, int maxResults) {
+        return null;
+    }
+
+    @Override
+    public List<UserModel> getGroupMembers(RealmModel realm, GroupModel group, int firstResult, int maxResults) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<UserModel> getGroupMembers(RealmModel realm, GroupModel group) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<UserModel> searchForUserByUserAttribute(String attrName, String attrValue, RealmModel realm) {
+        return null;
     }
 }

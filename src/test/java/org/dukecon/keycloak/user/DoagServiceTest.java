@@ -2,6 +2,7 @@ package org.dukecon.keycloak.user;
 
 import org.dukecon.keycoak.user.doag.DoagService;
 import org.dukecon.keycoak.user.doag.DoagUser;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -13,6 +14,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Niko Köbler, http://www.n-k.de, @dasniko
  */
+@Ignore
 public class DoagServiceTest {
 
     private String url = System.getProperty("doag.url");
