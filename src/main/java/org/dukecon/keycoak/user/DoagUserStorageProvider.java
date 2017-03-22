@@ -42,7 +42,7 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
         String externalId = StorageId.externalId(id);
         DoagUser doagUser = doagService.getUserById(externalId);
         if (null != doagUser) {
-            UserCache.addUser(doagUser);
+            UserCache.addUser(realm.getName(), doagUser);
             return new UserAdapter(session, realm, model, doagUser);
         } else {
             return null;
@@ -53,7 +53,7 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
     public UserModel getUserByUsername(String username, RealmModel realm) {
         DoagUser doagUser = doagService.getUser(username);
         if (null != doagUser) {
-            UserCache.addUser(doagUser);
+            UserCache.addUser(realm.getName(), doagUser);
             return new UserAdapter(session, realm, model, doagUser);
         } else {
             return null;
@@ -104,12 +104,12 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
 
     @Override
     public int getUsersCount(RealmModel realm) {
-        return UserCache.getCount();
+        return UserCache.getCount(realm.getName());
     }
 
     @Override
     public List<UserModel> getUsers(RealmModel realm) {
-        return UserCache.getUsers().stream()
+        return UserCache.getUsers(realm.getName()).stream()
                 .map(user -> new UserAdapter(session, realm, model, user))
                 .collect(Collectors.toList());
     }
@@ -121,7 +121,7 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
 
     @Override
     public List<UserModel> searchForUser(String search, RealmModel realm) {
-        return UserCache.findUsers(search).stream()
+        return UserCache.findUsers(realm.getName(), search).stream()
                 .map(user -> new UserAdapter(session, realm, model, user))
                 .collect(Collectors.toList());
     }
