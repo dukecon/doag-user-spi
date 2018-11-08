@@ -31,10 +31,10 @@
         <nexus.repository.base>/nexus</nexus.repository.base>
 
         <!-- Please keep (version) properties in alphabetical order! -->
-        <jboss.logging.version>3.3.0.Final</jboss.logging.version>
+        <jboss.logging.version>3.3.2.Final</jboss.logging.version>
         <junit.version>4.12</junit.version>
-        <keycloak.version>2.5.1.Final</keycloak.version>
-        <resteasy.version>3.0.14.Final</resteasy.version>
+        <keycloak.version>2.5.5.Final</keycloak.version>
+        <resteasy.version>3.6.2.Final</resteasy.version>
     </properties>
 
     <repositories>
