@@ -40,7 +40,7 @@
     <repositories>
         <repository>
             <id>dukecon</id>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/</url>
+            <url>https://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -53,7 +53,7 @@
     <pluginRepositories>
         <pluginRepository>
             <id>dukecon</id>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/</url>
+            <url>https://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/groups/public/</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -67,17 +67,17 @@
         <snapshotRepository>
             <id>dukecon-snapshots</id>
             <name>DukeCon Snapshots</name>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/snapshots</url>
+            <url>https://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
             <id>dukecon-releases</id>
             <name>DukeCon Snapshots</name>
-            <url>http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/releases</url>
+            <url>https://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/releases</url>
         </repository>
         <site>
             <id>dukecon-site</id>
             <name>DukeCon Site</name>
-            <url>dav:http://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/site/${project.groupId}/${project.artifactId}/${project.version}</url>
+            <url>dav:https://${nexus.repository.host}${nexus.repository.port}${nexus.repository.base}/content/repositories/site/${project.groupId}/${project.artifactId}/${project.version}</url>
         </site>
     </distributionManagement>
 
