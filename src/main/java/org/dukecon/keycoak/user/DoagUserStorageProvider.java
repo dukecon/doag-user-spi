@@ -2,6 +2,7 @@ package org.dukecon.keycoak.user;
 
 import org.dukecon.keycoak.user.doag.DoagService;
 import org.dukecon.keycoak.user.doag.DoagUser;
+import org.jboss.logging.Logger;
 import org.keycloak.component.ComponentModel;
 import org.keycloak.credential.CredentialInput;
 import org.keycloak.credential.CredentialInputValidator;
@@ -31,6 +32,8 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
     private final ComponentModel model;
     private final DoagService doagService;
 
+    private static final Logger logger = Logger.getLogger(DoagUserStorageProvider.class);
+
     public DoagUserStorageProvider(KeycloakSession session, ComponentModel model, DoagService doagService) {
         this.session = session;
         this.model = model;
@@ -39,23 +42,37 @@ public class DoagUserStorageProvider implements UserStorageProvider, UserLookupP
 
     @Override
     public UserModel getUserById(String id, RealmModel realm) {
+        logger.info("Getting user for id: " + id);
+
         String externalId = StorageId.externalId(id);
         DoagUser doagUser = doagService.getUserById(externalId);
         if (null != doagUser) {
+            logger.info("Getting user for id: " + id + " successful (DoagUserId: " + doagUser.getId() + ")");
+
             UserCache.addUser(doagUser);
             return new UserAdapter(session, realm, model, doagUser);
         } else {
+            logger.info("Getting user for id: " + id + " failed");
+
+
             return null;
         }
     }
 
     @Override
     public UserModel getUserByUsername(String username, RealmModel realm) {
+        logger.info("Getting user for username: " + username);
+
         DoagUser doagUser = doagService.getUser(username);
+
         if (null != doagUser) {
+            logger.info("Getting user for username: " + username + " successful (DoagUserId: " + doagUser.getId() + ")");
+
             UserCache.addUser(doagUser);
             return new UserAdapter(session, realm, model, doagUser);
         } else {
+            logger.info("Getting user for username: " + username + " failed");
+
             return null;
         }
     }
