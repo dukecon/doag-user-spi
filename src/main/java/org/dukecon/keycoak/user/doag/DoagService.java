@@ -87,7 +87,9 @@ public class DoagService {
     public boolean validateUserPassword(String username, String password) {
         try {
             String validationResult = doagClient.validatePassword(ART_PWD, username, password);
-            return Boolean.parseBoolean(validationResult.trim());
+            boolean result = Boolean.parseBoolean(validationResult.trim());
+            logger.infov ("Password for ''{0}'' is {1}", username, result ? "valid" : "invalid");
+            return result;
         } catch (Exception e) {
             handleException(e, "validatePassword");
             return false;
