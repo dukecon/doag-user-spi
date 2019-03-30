@@ -18,14 +18,13 @@ public class RestLoggingFilter implements ClientRequestFilter, ClientResponseFil
     private static final Logger logger = Logger.getLogger(RestLoggingFilter.class);
 
     @Override
-    public void filter(ClientRequestContext clientRequestContext) throws IOException {
-        logger.info("***** REQUEST: " + clientRequestContext.getUri().toString());
+    public void filter(ClientRequestContext clientRequestContext) {
         String username = (String) clientRequestContext.getHeaders().getFirst("user");
-        logger.info("Username: " + username);
+        logger.infov("***** REST REQUEST TO URL ''{0}'' FOR USER ''{1}''", clientRequestContext.getUri(), username);
     }
 
     @Override
-    public void filter(ClientRequestContext clientRequestContext, ClientResponseContext clientResponseContext) throws IOException {
-        logger.info("***** RESPONSE: " + clientResponseContext.getStatusInfo().getReasonPhrase());
+    public void filter(ClientRequestContext clientRequestContext, ClientResponseContext clientResponseContext) {
+        logger.infov("***** REST RESPONSE STATUS: ''{0}''", clientResponseContext.getStatusInfo().getReasonPhrase());
     }
 }
