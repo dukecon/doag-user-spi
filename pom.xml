@@ -33,7 +33,7 @@
         <!-- Please keep (version) properties in alphabetical order! -->
         <jboss.logging.version>3.3.2.Final</jboss.logging.version>
         <junit.version>4.12</junit.version>
-        <keycloak.version>4.8.1.Final</keycloak.version>
+        <keycloak.version>4.8.3.Final</keycloak.version>
         <resteasy.version>3.6.2.Final</resteasy.version>
     </properties>
 
