@@ -6,7 +6,7 @@
 
     <groupId>org.dukecon</groupId>
     <artifactId>keycloak-doag-user-spi</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.2-SNAPSHOT</version>
 
     <scm>
         <url>https://github.com/dukecon/doag-user-spi.git</url>
@@ -22,8 +22,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
 
         <!-- Set this to localhost if you would like to test upload server -->
         <nexus.repository.host>dev.dukecon.org</nexus.repository.host>
@@ -31,10 +31,10 @@
         <nexus.repository.base>/nexus</nexus.repository.base>
 
         <!-- Please keep (version) properties in alphabetical order! -->
-        <jboss.logging.version>3.3.2.Final</jboss.logging.version>
+        <jboss.logging.version>3.4.1.Final</jboss.logging.version>
         <junit.version>4.12</junit.version>
-        <keycloak.version>4.8.3.Final</keycloak.version>
-        <resteasy.version>3.6.2.Final</resteasy.version>
+        <keycloak.version>8.0.1</keycloak.version>
+        <resteasy.version>3.9.1.Final</resteasy.version>
     </properties>
 
     <repositories>
